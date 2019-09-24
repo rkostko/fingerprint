@@ -31,11 +31,6 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
-    "gulp": "^4.0.0",
-    "gulp-header-license": "^1.0.9",
-    "gulp-rename": "^1.4.0",
-    "gulp-uglify": "^3.0.1",
-    "gulp-util": "^3.0.8",
     "jasmine-expect": "^4.0.1",
     "karma": "^4.0.0",
     "karma-chrome-launcher": "^2.2.0",
