@@ -1,9 +1,9 @@
 module.exports = function (config) {
   config.set({
     frameworks: ['jasmine', 'jasmine-matchers'],
-    files: ['../fingerprint2.js', 'test.js'],
+    files: ['../dist/fingerprint2.umd.js', 'test.js'],
     reporters: ['progress'],
-    port: 9876,  // karma web server port
+    port: 9876, // karma web server port
     colors: true,
     logLevel: config.LOG_INFO,
     browsers: ['ChromeHeadless'],

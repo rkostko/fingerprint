@@ -50,6 +50,7 @@
   },
   "scripts": {
     "build": "rollup --config",
+    "pretest": "yarn build",
     "test": "karma start --single-run --browsers ChromeHeadless tests/karma.conf.js",
     "test:debug": "karma start --single-run=false --browsers Chrome tests/karma.conf.js",
     "gulp": "gulp",
