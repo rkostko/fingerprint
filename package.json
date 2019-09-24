@@ -22,12 +22,15 @@
     "url": "https://github.com/Valve/fingerprintjs2/issues"
   },
   "homepage": "https://github.com/Valve/fingerprintjs2",
-  "main": "fingerprint2.js",
+  "main": "src/index.js",
+  "browser": "dist/fingerprint2.umd.js",
   "files": [
     "dist",
     "flash"
   ],
   "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
     "gulp": "^4.0.0",
     "gulp-header-license": "^1.0.9",
     "gulp-rename": "^1.4.0",
@@ -38,9 +41,15 @@
     "karma-chrome-launcher": "^2.2.0",
     "karma-jasmine": "^2.0.1",
     "karma-jasmine-matchers": "^4.0.1",
+    "rollup": "^1.21.4",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-uglify": "^6.0.3",
     "standard": "^10.0.3"
   },
   "scripts": {
+    "build": "rollup --config",
     "test": "karma start --single-run --browsers ChromeHeadless tests/karma.conf.js",
     "test:debug": "karma start --single-run=false --browsers Chrome tests/karma.conf.js",
     "gulp": "gulp",
