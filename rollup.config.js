@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
@@ -5,14 +7,33 @@ import { uglify } from 'rollup-plugin-uglify'
 
 import config from './package.json'
 
+const licenseContents = fs.readFileSync(
+  path.resolve(__dirname, 'license.txt'),
+  { encoding: 'utf-8' },
+)
+
 module.exports = [
   {
     input: 'src/browser.js',
     output: {
       file: config.browser,
       format: 'umd',
-      name: 'Fingerprint2'
+      name: 'Fingerprint2',
+      banner: licenseContents.replace('${YEAR}', new Date().getFullYear()),
     },
-    plugins: [commonjs(), resolve(), babel(), uglify()]
-  }
+    plugins: [
+      commonjs(),
+      resolve(),
+      babel(),
+      uglify({
+        output: {
+          ascii_only: true,
+          comments: (_, comment) => {
+            // Do not remove the license comments.
+            return /Fingerprintjs2|Licensed under/.test(comment.value)
+          },
+        },
+      }),
+    ],
+  },
 ]
