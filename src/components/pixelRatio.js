@@ -1,5 +1,7 @@
-function getData (done, options) {
-  done(window.devicePixelRatio || options.NOT_AVAILABLE)
+import { NOT_AVAILABLE } from '../constants'
+
+function getData (done) {
+  done(window.devicePixelRatio || NOT_AVAILABLE)
 }
 
 export default {

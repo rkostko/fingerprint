@@ -1,11 +1,13 @@
+import { NOT_AVAILABLE } from '../constants'
+
 var isEnumerateDevicesSupported = function () {
   return navigator.mediaDevices && navigator.mediaDevices.enumerateDevices
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/enumerateDevices
-function getData (done, options) {
+function getData (done) {
   if (!isEnumerateDevicesSupported()) {
-    return done(options.NOT_AVAILABLE)
+    return done(NOT_AVAILABLE)
   }
   navigator.mediaDevices
     .enumerateDevices()

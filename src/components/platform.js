@@ -1,13 +1,15 @@
-const getNavigatorPlatform = (options) => {
+import { NOT_AVAILABLE } from '../constants'
+
+const getNavigatorPlatform = () => {
   if (navigator.platform) {
     return navigator.platform
   } else {
-    return options.NOT_AVAILABLE
+    return NOT_AVAILABLE
   }
 }
 
-function getData (done, options) {
-  done(getNavigatorPlatform(options))
+function getData (done) {
+  done(getNavigatorPlatform())
 }
 
 export default {

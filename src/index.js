@@ -40,10 +40,7 @@ var defaultOptions = {
   plugins: {
     sortPluginsFor: [/palemoon/i],
     excludeIE: false
-  },
-  NOT_AVAILABLE: 'not available',
-  ERROR: 'error',
-  EXCLUDED: 'excluded'
+  }
 }
 
 export default function Fingerprint2 (options, callback) {

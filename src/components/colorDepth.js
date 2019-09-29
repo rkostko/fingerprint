@@ -1,5 +1,7 @@
-function getData (done, options) {
-  done(window.screen.colorDepth || options.NOT_AVAILABLE)
+import { NOT_AVAILABLE } from '../constants'
+
+function getData (done) {
+  done(window.screen.colorDepth || NOT_AVAILABLE)
 }
 
 export default {

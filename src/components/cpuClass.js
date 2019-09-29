@@ -1,9 +1,11 @@
-const getNavigatorCpuClass = (options) => {
-  return navigator.cpuClass || options.NOT_AVAILABLE
+import { NOT_AVAILABLE } from '../constants'
+
+const getNavigatorCpuClass = () => {
+  return navigator.cpuClass || NOT_AVAILABLE
 }
 
-function getData (done, options) {
-  done(getNavigatorCpuClass(options))
+function getData (done) {
+  done(getNavigatorCpuClass())
 }
 
 export default {

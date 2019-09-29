@@ -1,7 +1,7 @@
-function getData (done, options) {
-  done(
-    navigator.webdriver == null ? options.NOT_AVAILABLE : navigator.webdriver
-  )
+import { NOT_AVAILABLE } from '../constants'
+
+function getData (done) {
+  done(navigator.webdriver == null ? NOT_AVAILABLE : navigator.webdriver)
 }
 
 export default {

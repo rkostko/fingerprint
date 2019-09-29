@@ -1,4 +1,6 @@
-const getDoNotTrack = (options) => {
+import { NOT_AVAILABLE } from '../constants'
+
+const getDoNotTrack = () => {
   if (navigator.doNotTrack) {
     return navigator.doNotTrack
   } else if (navigator.msDoNotTrack) {
@@ -6,12 +8,12 @@ const getDoNotTrack = (options) => {
   } else if (window.doNotTrack) {
     return window.doNotTrack
   } else {
-    return options.NOT_AVAILABLE
+    return NOT_AVAILABLE
   }
 }
 
-function getData (done, options) {
-  done(getDoNotTrack(options))
+function getData (done) {
+  done(getDoNotTrack())
 }
 
 export default {

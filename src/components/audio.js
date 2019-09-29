@@ -1,4 +1,5 @@
 import { each } from '../utils'
+import { NOT_AVAILABLE, EXCLUDED } from '../constants'
 
 // Inspired by and based on https://github.com/cozylife/audio-fingerprint
 function getData (done, options) {
@@ -8,14 +9,14 @@ function getData (done, options) {
     navigator.userAgent.match(/OS 11.+Version\/11.+Safari/)
   ) {
     // See comment for excludeUserAgent and https://stackoverflow.com/questions/46363048/onaudioprocess-not-called-on-ios11#46534088
-    return done(options.EXCLUDED)
+    return done(EXCLUDED)
   }
 
   var AudioContext =
     window.OfflineAudioContext || window.webkitOfflineAudioContext
 
   if (AudioContext == null) {
-    return done(options.NOT_AVAILABLE)
+    return done(NOT_AVAILABLE)
   }
 
   var context = new AudioContext(1, 44100, 44100)

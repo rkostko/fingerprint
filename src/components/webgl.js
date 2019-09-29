@@ -1,4 +1,5 @@
 import { isWebGlSupported, getWebglCanvas, each } from '../utils'
+import { NOT_AVAILABLE } from '../constants'
 
 const getWebglFp = () => {
   var gl
@@ -202,12 +203,12 @@ const getWebglFp = () => {
   return result
 }
 
-function getData (done, options) {
+function getData (done) {
   if (isWebGlSupported()) {
     done(getWebglFp())
     return
   }
-  done(options.NOT_AVAILABLE)
+  done(NOT_AVAILABLE)
 }
 
 export default {

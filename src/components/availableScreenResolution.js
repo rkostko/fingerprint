@@ -1,3 +1,5 @@
+import { NOT_AVAILABLE } from '../constants'
+
 const getAvailableScreenResolution = (options) => {
   if (window.screen.availWidth && window.screen.availHeight) {
     var available = [window.screen.availHeight, window.screen.availWidth]
@@ -7,7 +9,7 @@ const getAvailableScreenResolution = (options) => {
     return available
   }
   // headless browsers
-  return options.NOT_AVAILABLE
+  return NOT_AVAILABLE
 }
 
 function getData (done, options) {

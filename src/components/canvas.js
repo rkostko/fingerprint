@@ -1,4 +1,5 @@
 import { isCanvasSupported } from '../utils'
+import { NOT_AVAILABLE } from '../constants'
 
 // https://www.browserleaks.com/canvas#how-does-it-work
 const getCanvasFp = (options) => {
@@ -72,7 +73,7 @@ function getData (done, options) {
     done(getCanvasFp(options))
     return
   }
-  done(options.NOT_AVAILABLE)
+  done(NOT_AVAILABLE)
 }
 
 export default {

@@ -1,12 +1,14 @@
-const getHardwareConcurrency = (options) => {
+import { NOT_AVAILABLE } from '../constants'
+
+const getHardwareConcurrency = () => {
   if (navigator.hardwareConcurrency) {
     return navigator.hardwareConcurrency
   }
-  return options.NOT_AVAILABLE
+  return NOT_AVAILABLE
 }
 
-function getData (done, options) {
-  done(getHardwareConcurrency(options))
+function getData (done) {
+  done(getHardwareConcurrency())
 }
 
 export default {

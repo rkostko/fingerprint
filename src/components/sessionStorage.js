@@ -1,13 +1,15 @@
-const hasSessionStorage = (options) => {
+import { ERROR } from '../constants'
+
+const hasSessionStorage = () => {
   try {
     return !!window.sessionStorage
   } catch (e) {
-    return options.ERROR // SecurityError when referencing it means it exists
+    return ERROR // SecurityError when referencing it means it exists
   }
 }
 
-function getData (done, options) {
-  done(hasSessionStorage(options))
+function getData (done) {
+  done(hasSessionStorage())
 }
 
 export default {

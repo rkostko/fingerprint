@@ -1,5 +1,7 @@
-function getData (done, options) {
-  done(navigator.deviceMemory || options.NOT_AVAILABLE)
+import { NOT_AVAILABLE } from '../constants'
+
+function getData (done) {
+  done(navigator.deviceMemory || NOT_AVAILABLE)
 }
 
 export default {

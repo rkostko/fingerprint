@@ -1,13 +1,15 @@
-const hasIndexedDB = (options) => {
+import { ERROR } from '../constants'
+
+const hasIndexedDB = () => {
   try {
     return !!window.indexedDB
   } catch (e) {
-    return options.ERROR // SecurityError when referencing it means it exists
+    return ERROR // SecurityError when referencing it means it exists
   }
 }
 
-function getData (done, options) {
-  done(hasIndexedDB(options))
+function getData (done) {
+  done(hasIndexedDB())
 }
 
 export default {

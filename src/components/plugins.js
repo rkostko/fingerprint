@@ -1,3 +1,5 @@
+import { ERROR, EXCLUDED, NOT_AVAILABLE } from '../constants'
+
 const isIE = () => {
   if (navigator.appName === 'Microsoft Internet Explorer') {
     return true
@@ -25,7 +27,7 @@ const pluginsShouldBeSorted = (options) => {
 
 const getRegularPlugins = (options) => {
   if (navigator.plugins == null) {
-    return options.NOT_AVAILABLE
+    return NOT_AVAILABLE
   }
 
   var plugins = []
@@ -95,11 +97,11 @@ const getIEPlugins = (options) => {
         new window.ActiveXObject(name)
         return name
       } catch (e) {
-        return options.ERROR
+        return ERROR
       }
     })
   } else {
-    result.push(options.NOT_AVAILABLE)
+    result.push(NOT_AVAILABLE)
   }
   if (navigator.plugins) {
     result = result.concat(getRegularPlugins(options))
@@ -112,7 +114,7 @@ function getData (done, options) {
     if (!options.plugins.excludeIE) {
       done(getIEPlugins(options))
     } else {
-      done(options.EXCLUDED)
+      done(EXCLUDED)
     }
   } else {
     done(getRegularPlugins(options))

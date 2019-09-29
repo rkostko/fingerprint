@@ -1,10 +1,12 @@
-function getData (done, options) {
+import { NOT_AVAILABLE } from '../constants'
+
+function getData (done) {
   done(
     navigator.language ||
       navigator.userLanguage ||
       navigator.browserLanguage ||
       navigator.systemLanguage ||
-      options.NOT_AVAILABLE
+      NOT_AVAILABLE
   )
 }
 
