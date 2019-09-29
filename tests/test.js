@@ -269,28 +269,6 @@ describe('Fingerprint2', () => {
         })
       })
 
-      describe('error constants', () => {
-        it('are configurable', (done) => {
-          const NA = 'NA'
-          let options = {
-            NOT_AVAILABLE: NA,
-            components: [
-              {
-                key: 'my key',
-                getData: function customFunction (done, options2) {
-                  done(options2.NOT_AVAILABLE)
-                }
-              }
-            ]
-          }
-          Fingerprint2.get(options, (components) => {
-            expect(components).toBeDefined()
-            expect(getComponent(components, 'my key')).toEqual(NA)
-            done()
-          })
-        })
-      })
-
       describe('enumerate devices fingerprint', () => {
         it('checks enumerate devices fingerprint', (done) => {
           let options = {
