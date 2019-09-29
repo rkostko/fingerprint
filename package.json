@@ -25,6 +25,7 @@
   "main": "src/index.js",
   "browser": "dist/fingerprint2.min.js",
   "files": [
+    "src",
     "dist",
     "flash"
   ],
