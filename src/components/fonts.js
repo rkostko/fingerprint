@@ -69,7 +69,7 @@ export const baseFontsList = [
   'Wingdings 3'
 ]
 
-export const extendedFontList = [
+export const extendedFontsList = [
   'Abadi MT Condensed Light',
   'Academy Engraved LET',
   'ADOBE CASLON PRO',
