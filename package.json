@@ -1,10 +1,10 @@
 {
-  "name": "fingerprintjs2",
+  "name": "fingerprintjs2-modular",
   "version": "2.1.1",
   "description": "Modern & flexible browser fingerprinting library",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Valve/fingerprintjs2.git"
+    "url": "https://github.com/markogresak/fingerprintjs2.git"
   },
   "keywords": [
     "fraud",
@@ -14,14 +14,18 @@
     "identification",
     "fingerprint",
     "fingerprinting",
-    "privacy"
+    "privacy",
+    "modular"
   ],
   "author": "Valentin Vasilyev",
+  "contributors": [
+    "Marko Gresak (https://gresak.io)"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Valve/fingerprintjs2/issues"
+    "url": "https://github.com/markogresak/fingerprintjs2/issues"
   },
-  "homepage": "https://github.com/Valve/fingerprintjs2",
+  "homepage": "https://github.com/markogresak/fingerprintjs2",
   "main": "dist/fingerprint2.cjs.js",
   "module": "dist/fingerprint2.esm.js",
   "browser": "dist/fingerprint2.min.js",

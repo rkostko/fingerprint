@@ -32,15 +32,13 @@ The goal of this fork is to create a modular build of `Fingerprint2`. The benefi
 
 ## Installation
 
-- CDN: `//cdn.jsdelivr.net/npm/fingerprintjs2@<VERSION>/dist/fingerprint2.min.js` or `https://cdnjs.com/libraries/fingerprintjs2`
-- Bower: `bower install fingerprintjs2`
-- NPM: `npm install fingerprintjs2`
-- Yarn: `yarn add fingerprintjs2`
+- NPM: `npm install fingerprintjs2-modular`
+- Yarn: `yarn add fingerprintjs2-modular`
 
 ## Usage
 
 ```js
-import Fingerprint2 from 'fingerprint2'
+import Fingerprint2 from 'fingerprintjs2-modular'
 
 if (window.requestIdleCallback) {
   requestIdleCallback(function() {
@@ -68,7 +66,7 @@ To speed up fingerprint computation, you can exclude font detection (~ 40ms), ca
 To choose which components to include in the fingerprint, pass a list to the `Fingerprint2` function
 
 ```js
-import Fingerprint2, { canvas, userAgent, webgl } from 'fingerprint2'
+import Fingerprint2, { canvas, userAgent, webgl } from 'fingerprintjs2-modular'
 
 Fingerprint2({
   components: [canvas, userAgent, webgl],
@@ -85,7 +83,7 @@ For the default options, please see the source code (look for `var defaultOption
 You can also use all recommended components `recommended` import
 
 ```js
-import Fingerprint2, { recommended } from 'fingerprint2'
+import Fingerprint2, { recommended } from 'fingerprintjs2-modular'
 
 Fingerprint2({
   components: recommended,
@@ -109,7 +107,7 @@ const myCustomComponent = {
 
 ```js
 // main.js
-import Fingerprint2, { recommended } from 'fingerprint2'
+import Fingerprint2, { recommended } from 'fingerprintjs2-modular'
 
 import myCustomComponent from './myCustomComponent'
 
@@ -126,7 +124,7 @@ By default, JS font detection will only detect up to 65 installed fonts. If you 
 To use extended fonts list, import the `extendedFontsList` array from `fonts` component. This will increase the number of detectable fonts to ~500.
 
 ```js
-import Fingerprint2, { fonts, /*, other components */, extendedFontsList } from 'fingerprint2'
+import Fingerprint2, { fonts, /*, other components */, extendedFontsList } from 'fingerprintjs2-modular'
 
 Fingerprint2({
   components: [fonts /*, other components */],
@@ -229,7 +227,7 @@ Fingerprint2(
 The most straight-forward way to exclude components is to not pass them to the `components` list. If you want to use the `recommended` list, but not use all of the components, a workaround is to filter out the unwanted components
 
 ```js
-import Fingerprint2, { recommended } from 'fingerprint2'
+import Fingerprint2, { recommended } from 'fingerprintjs2-modular'
 
 const excludedComponentKeys = ['userAgent', 'language']
 
@@ -254,7 +252,7 @@ The constants used for unavailable, error'd, or excluded components' values.
 If you want to use the value of constant, or compare against the value, import them as
 
 ```js
-import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2'
+import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprintjs2-modular'
 ```
 
 ## Upgrade guide from 2.0.0
@@ -264,7 +262,7 @@ import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2'
 Expecting all components to be passed as `options.components` array, for example:
 
 ```js
-import Fingerprint2, { recommended } from 'fingerprint2'
+import Fingerprint2, { recommended } from 'fingerprintjs2-modular'
 
 Fingerprint2({
   components: recommended,
@@ -281,7 +279,7 @@ Pass only `options.components` which you want to use. If importing the `recommen
 The constants are not configurable. To use the constants in your custom components or to compare against the constant, import constants as
 
 ```js
-import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2'
+import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprintjs2-modular'
 ```
 
 ### `x64hash128`
@@ -289,7 +287,7 @@ import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2'
 `Fingerprint2.x64hash128` is not exposed anymore. Import the function as
 
 ```js
-import { x64hash128 } from 'fingerprint2'
+import { x64hash128 } from 'fingerprintjs2-modular'
 ```
 
 Or if you prefer, you can use a different hash function.
