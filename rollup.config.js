@@ -12,6 +12,8 @@ const licenseContents = fs.readFileSync(
   { encoding: 'utf-8' }
 )
 
+const commonPlugins = [babel()]
+
 module.exports = [
   {
     input: 'src/browser.js',
@@ -24,7 +26,7 @@ module.exports = [
     plugins: [
       commonjs(),
       resolve(),
-      babel(),
+      ...commonPlugins,
       uglify({
         output: {
           ascii_only: true,
@@ -35,5 +37,13 @@ module.exports = [
         }
       })
     ]
+  },
+  {
+    input: 'src/index.js',
+    output: [
+      { file: config.main, format: 'cjs', exports: 'named' },
+      { file: config.module, format: 'es', exports: 'named' }
+    ],
+    plugins: commonPlugins
   }
 ]

@@ -22,10 +22,10 @@
     "url": "https://github.com/Valve/fingerprintjs2/issues"
   },
   "homepage": "https://github.com/Valve/fingerprintjs2",
-  "main": "src/index.js",
+  "main": "dist/fingerprint2.cjs.js",
+  "module": "dist/fingerprint2.esm.js",
   "browser": "dist/fingerprint2.min.js",
   "files": [
-    "src",
     "dist",
     "flash"
   ],

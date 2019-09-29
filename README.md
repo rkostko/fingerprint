@@ -34,15 +34,17 @@
 ## Usage
 
 ```js
+import Fingerprint2 from 'fingerprint2'
+
 if (window.requestIdleCallback) {
   requestIdleCallback(function() {
-    Fingerprint2.get(function(components) {
+    Fingerprint2(function(components) {
       console.log(components) // an array of components: {key: ..., value: ...}
     })
   })
 } else {
   setTimeout(function() {
-    Fingerprint2.get(function(components) {
+    Fingerprint2(function(components) {
       console.log(components) // an array of components: {key: ..., value: ...}
     })
   }, 500)
@@ -60,8 +62,7 @@ To speed up fingerprint computation, you can exclude font detection (~ 40ms), ca
 To choose which components to include in the fingerprint, pass a list to the `Fingerprint2` function
 
 ```js
-import Fingerprint2 from 'fingerprint2'
-import { canvas, userAgent, webgl } from 'fingerprint2/src/components'
+import Fingerprint2, { canvas, userAgent, webgl } from 'fingerprint2'
 
 Fingerprint2({
   components: [canvas, userAgent, webgl],
@@ -78,8 +79,7 @@ For the default options, please see the source code (look for `var defaultOption
 You can also use all recommended components `recommended` import
 
 ```js
-import Fingerprint2 from 'fingerprint2'
-import { recommended } from 'fingerprint2/src/components'
+import Fingerprint2, { recommended } from 'fingerprint2'
 
 Fingerprint2({
   components: recommended,
@@ -103,8 +103,7 @@ const myCustomComponent = {
 
 ```js
 // main.js
-import Fingerprint2 from 'fingerprint2'
-import { recommended } from 'fingerprint2/src/components'
+import Fingerprint2, { recommended } from 'fingerprint2'
 
 import myCustomComponent from './myCustomComponent'
 
@@ -121,9 +120,7 @@ By default, JS font detection will only detect up to 65 installed fonts. If you 
 To use extended fonts list, import the `extendedFontsList` array from `fonts` component. This will increase the number of detectable fonts to ~500.
 
 ```js
-import Fingerprint2 from 'fingerprint2'
-import { fonts /*, other components */ } from 'fingerprint2/src/components'
-import { extendedFontsList } from 'fingerprint2/src/components/fonts'
+import Fingerprint2, { fonts, /*, other components */, extendedFontsList } from 'fingerprint2'
 
 Fingerprint2({
   components: [fonts /*, other components */],
@@ -160,7 +157,7 @@ Specifies an array of user-defined fonts to increase font fingerprint entropy ev
 While hundreds of the most popular fonts are included in the extended font list, you may wish to increase the entropy of the font fingerprint by specifying the `userDefinedFonts` option as an array of font names, **but make sure to call the Fingerprint function after the page load, and not before**, otherwise font detection might not work properly and in a result returned hash might be different every time you reloaded the page.
 
 ```js
-Fingerprint2.get(
+Fingerprint2(
   {
     userDefinedFonts: ['Nimbus Mono', 'Junicode', 'Presto'],
   },
@@ -203,7 +200,7 @@ To use Flash font enumeration, make sure you have swfobject available. If you do
 Function that is called with each component value that may be used to modify component values before computing the fingerprint. For example: strip browser version from user agent.
 
 ```js
-Fingerprint2.get(
+Fingerprint2(
   {
     preprocessor: function(key, value) {
       if (key == 'userAgent') {
@@ -226,8 +223,7 @@ Fingerprint2.get(
 The most straight-forward way to exclude components is to not pass them to the `components` list. If you want to use the `recommended` list, but not use all of the components, a workaround is to filter out the unwanted components
 
 ```js
-import Fingerprint2 from 'fingerprint2'
-import { recommended } from 'fingerprint2/src/components'
+import Fingerprint2, { recommended } from 'fingerprint2'
 
 const excludedComponentKeys = ['userAgent', 'language']
 
@@ -252,7 +248,7 @@ The constants used for unavailable, error'd, or excluded components' values.
 If you want to use the value of constant, or compare against the value, import them as
 
 ```js
-import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2/src/constants'
+import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2'
 ```
 
 ## Upgrade guide from 2.0.0
@@ -262,8 +258,7 @@ import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2/src/constants'
 Expecting all components to be passed as `options.components` array, for example:
 
 ```js
-import Fingerprint2 from 'fingerprint2'
-import { recommended } from 'fingerprint2/src/components'
+import Fingerprint2, { recommended } from 'fingerprint2'
 
 Fingerprint2({
   components: recommended,
@@ -280,7 +275,7 @@ Pass only `options.components` which you want to use. If importing the `recommen
 The constants are not configurable. To use the constants in your custom components or to compare against the constant, import constants as
 
 ```js
-import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2/src/constants'
+import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2'
 ```
 
 ### Backwards compatibility mode

@@ -17,6 +17,12 @@
  */
 
 import { extendSoft } from './utils'
+export * from './constants'
+export * from './components/index'
+export { default as x64hash128 } from './x64hash128'
+export { extendedFontsList } from './components/fonts'
+
+export const VERSION = '3.0.0'
 
 var defaultOptions = {
   preprocessor: null,
@@ -94,5 +100,3 @@ export default function Fingerprint2 (options, callback) {
 
   chainComponents(false)
 }
-
-export const VERSION = '3.0.0'
