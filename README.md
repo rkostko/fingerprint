@@ -24,7 +24,6 @@
   </h3>
 </p>
 
-
 ## Installation
 
 - CDN: `//cdn.jsdelivr.net/npm/fingerprintjs2@<VERSION>/dist/fingerprint2.min.js` or `https://cdnjs.com/libraries/fingerprintjs2`
@@ -32,22 +31,21 @@
 - NPM: `npm install fingerprintjs2`
 - Yarn: `yarn add fingerprintjs2`
 
-
 ## Usage
 
 ```js
 if (window.requestIdleCallback) {
-    requestIdleCallback(function () {
-        Fingerprint2.get(function (components) {
-          console.log(components) // an array of components: {key: ..., value: ...}
-        })
+  requestIdleCallback(function() {
+    Fingerprint2.get(function(components) {
+      console.log(components) // an array of components: {key: ..., value: ...}
     })
+  })
 } else {
-    setTimeout(function () {
-        Fingerprint2.get(function (components) {
-          console.log(components) // an array of components: {key: ..., value: ...}
-        })  
-    }, 500)
+  setTimeout(function() {
+    Fingerprint2.get(function(components) {
+      console.log(components) // an array of components: {key: ..., value: ...}
+    })
+  }, 500)
 }
 ```
 
@@ -55,41 +53,127 @@ if (window.requestIdleCallback) {
 
 On my machine (MBP 2013 Core i5) + Chrome 46 the default FP process takes about 80-100ms. If you use `extendedJsFonts` option this time will increase up to 2000ms (cold font cache).
 
-To speed up fingerprint computation, you can exclude font detection (~ 40ms), canvas fingerprint (~ 10ms),  WebGL fingerprint (~ 35 ms), and Audio fingerprint (~30 ms).
+To speed up fingerprint computation, you can exclude font detection (~ 40ms), canvas fingerprint (~ 10ms), WebGL fingerprint (~ 35 ms), and Audio fingerprint (~30 ms).
 
 ## Options
 
-You choose which components to include in the fingerprint, and configure some other stuff. Example:
+To choose which components to include in the fingerprint, pass a list to the `Fingerprint2` function
 
 ```js
-var options = {fonts: {extendedJsFonts: true}, excludes: {userAgent: true}}
+import Fingerprint2 from 'fingerprint2'
+import { canvas, userAgent, webgl } from 'fingerprint2/src/components'
+
+Fingerprint2({
+  components: [canvas, userAgent, webgl],
+  // other options
+})
 ```
+
+> With tree-shaking (built-in with most modern build tools), imports like these will automatically eliminate all unused fingerprinting code, which should drastically decrease the output size.
 
 For the default options, please see the source code (look for `var defaultOptions = {`).
 
-### `fonts.extendedJsFonts`
+### Recommended Components
 
-By default, JS font detection will only detect up to 65 installed fonts. If you want to improve the font detection, you can pass `extendedJsFonts: true` option. This will increase the number of detectable fonts to ~500.
+You can also use all recommended components `recommended` import
 
-Note that this option increases fingerprint duration from about 80-100ms to up to 2000ms (cold font cache).  It can incur even more overhead on mobile Firefox browsers, which is much slower in font detection, so use it with caution on mobile devices.
+```js
+import Fingerprint2 from 'fingerprint2'
+import { recommended } from 'fingerprint2/src/components'
+
+Fingerprint2({
+  components: recommended,
+  // other options
+})
+```
+
+### Custom Components
+
+All components are simple objects with `key` (component name) and `getData(done, options)` properties. You can provide the custom components along with any of the used built-in components.
+
+```js
+// myCustomComponent.js
+const myCustomComponent = {
+  key: 'customKey',
+  getData: (done, options) => {
+    done('infos ...')
+  },
+}
+```
+
+```js
+// main.js
+import Fingerprint2 from 'fingerprint2'
+import { recommended } from 'fingerprint2/src/components'
+
+import myCustomComponent from './myCustomComponent'
+
+Fingerprint2({
+  components: [...recommended, myCustomComponent],
+  // other options
+})
+```
+
+### Extended Fonts List
+
+By default, JS font detection will only detect up to 65 installed fonts. If you want to improve the font detection by passing the `extendedFontsList`.
+
+To use extended fonts list, import the `extendedFontsList` array from `fonts` component. This will increase the number of detectable fonts to ~500.
+
+```js
+import Fingerprint2 from 'fingerprint2'
+import { fonts /*, other components */ } from 'fingerprint2/src/components'
+import { extendedFontsList } from 'fingerprint2/src/components/fonts'
+
+Fingerprint2({
+  components: [fonts /*, other components */],
+  fonts: {
+    userDefinedFonts: extendedFontsList,
+  },
+  // other options
+})
+```
+
+Note that this option increases fingerprint duration from about 80-100ms to up to 2000ms (cold font cache). It can incur even more overhead on mobile Firefox browsers, which is much slower in font detection, so use it with caution on mobile devices.
+
+The `extendedFontsList` is an array, so it can be easily extended to add more custom fonts:
+
+```js
+Fingerprint2({
+  components: [fonts /*, other components */],
+  fonts: {
+    userDefinedFonts: [
+      ...extendedFontsList,
+      'Nimbus Mono',
+      'Junicode',
+      'Presto',
+    ],
+  },
+  // other options
+})
+```
 
 ### `fonts.userDefinedFonts`
+
 Specifies an array of user-defined fonts to increase font fingerprint entropy even more.
 
 While hundreds of the most popular fonts are included in the extended font list, you may wish to increase the entropy of the font fingerprint by specifying the `userDefinedFonts` option as an array of font names, **but make sure to call the Fingerprint function after the page load, and not before**, otherwise font detection might not work properly and in a result returned hash might be different every time you reloaded the page.
 
 ```js
-Fingerprint2.get({
-  userDefinedFonts: ["Nimbus Mono", "Junicode", "Presto"]
-}, function(components) {
-
-})
+Fingerprint2.get(
+  {
+    userDefinedFonts: ['Nimbus Mono', 'Junicode', 'Presto'],
+  },
+  function(components) {},
+)
 ```
 
 ### `fonts.swfContainerId`
+
 Specifies the dom element ID to be used for swf embedding (flash fonts)
 
 ### `fonts.swfPath`
+
 Specifies the path to the FontList.swf (flash fonts)
 
 ### `screen.detectScreenOrientation` (default: true)
@@ -99,6 +183,7 @@ Specifies the path to the FontList.swf (flash fonts)
 Some browsers randomise plugin order. You can give a list of user agent regexes for which plugins should be sorted.
 
 ### `plugins.excludeIE`
+
 Skip IE plugin enumeration/detection
 
 ### `audio.excludeIOS11` (default: true)
@@ -106,73 +191,101 @@ Skip IE plugin enumeration/detection
 iOS 11 prevents audio fingerprinting unless started from a user interaction (screen tap), preventing the fingerprinting process from finishing. If you're sure you start fingerprinting from a user interaction event handler, you may enable audio fingerprinting on iOS 11.
 
 ### `audio.timeout` (default: 1000)
+
 maximum time allowed for 'audio' component
 
 ### `fontsFlash`
 
 To use Flash font enumeration, make sure you have swfobject available. If you don't, the library will skip the Flash part entirely.
 
-### `extraComponents`
-
-Arrays of extra components to include.
-
-```
-var options = {
-    extraComponents : [
-        {key: 'customKey', getData: function (done, options) {
-            done('infos ...')
-        }
-    ]
-}
-```
-
 ### `preprocessor`
 
 Function that is called with each component value that may be used to modify component values before computing the fingerprint. For example: strip browser version from user agent.
 
 ```js
-Fingerprint2.get({
-  preprocessor: function(key, value) {
-    if (key == "userAgent") {
-      var parser = new UAParser(value); // https://github.com/faisalman/ua-parser-js
-      var userAgentMinusVersion = parser.getOS().name + ' ' + parser.getBrowser().name
-      return userAgentMinusVersion
-    }
-    return value
-  }
-},function(components) {
-  // userAgent component will contain string processed with our function. For example: Windows Chrome
-});
+Fingerprint2.get(
+  {
+    preprocessor: function(key, value) {
+      if (key == 'userAgent') {
+        var parser = new UAParser(value) // https://github.com/faisalman/ua-parser-js
+        var userAgentMinusVersion =
+          parser.getOS().name + ' ' + parser.getBrowser().name
+        return userAgentMinusVersion
+      }
+      return value
+    },
+  },
+  function(components) {
+    // userAgent component will contain string processed with our function. For example: Windows Chrome
+  },
+)
 ```
 
-### `excludes`
+### Excluding components
 
-An object of with components keys to exclude. Empty object to include everything. By default most of the components are included (please see the source code for details).
+The most straight-forward way to exclude components is to not pass them to the `components` list. If you want to use the `recommended` list, but not use all of the components, a workaround is to filter out the unwanted components
 
+```js
+import Fingerprint2 from 'fingerprint2'
+import { recommended } from 'fingerprint2/src/components'
+
+const excludedComponentKeys = ['userAgent', 'language']
+
+Fingerprint2({
+  components: recommended.filter(
+    (component) => !excludedComponentKeys.includes(component.key),
+  ),
+  // other options
+})
 ```
-var options = {
-    excludes: {userAgent: true, language: true}
-}
-```
 
-To see a list of possible excludes, please see the source code (look for `var components = [`).
+_Note: the above example uses `Array.prototype.includes()`, which is ES2015 feature and is not supported in older browsers. Make sure to use to include a polyfill or use a different method to filter the components._
 
 ### Constants
 
 The constants used for unavailable, error'd, or excluded components' values.
 
-```js
-var options = {
-    NOT_AVAILABLE: 'not available',
-    ERROR: 'error',
-    EXCLUDED: 'excluded',
-}
-```
-
 - `NOT_AVAILABLE`: Component value if the browser doesn't support the API the component uses (e.g. `enumerateDevices`) or the browser doesn't provide a useful value (e.g. `deviceMemory`).
 - `ERROR`: The component function threw an error.
 - `EXCLUDED`: The component was excluded.
 
+If you want to use the value of constant, or compare against the value, import them as
+
+```js
+import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2/src/constants'
+```
+
+## Upgrade guide from 2.0.0
+
+### Recommended components and custom components
+
+Expecting all components to be passed as `options.components` array, for example:
+
+```js
+import Fingerprint2 from 'fingerprint2'
+import { recommended } from 'fingerprint2/src/components'
+
+Fingerprint2({
+  components: recommended,
+  // other options
+})
+```
+
+### Excluded components
+
+Pass only `options.components` which you want to use. If importing the `recommended` components array, filter out the array to exclude the unwanted components.
+
+### Constants
+
+The constants are not configurable. To use the constants in your custom components or to compare against the constant, import constants as
+
+```js
+import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2/src/constants'
+```
+
+### Backwards compatibility mode
+
+The backwards compatibility mode function (`Fingerprint2.getV18`). If you wish to keep using [the exact implementation](https://github.com/Valve/fingerprintjs2/blob/bf7039da92655f981b2b958bb51a031e15601dbe/fingerprint2.js#L1378-L1420), you can copy it to your codebase.
 
 ## Upgrade guide from 1.8.2 to 2.0.0
 
@@ -184,7 +297,7 @@ Note that the `options` parameter **must be provided in v2.0 syntax**.
 
 ```js
 // options must be provided in v2.0 syntax
-Fingerprint2.getV18(options, function (result, components) {
+Fingerprint2.getV18(options, function(result, components) {
   // result is murmur hash fingerprint
   // components is array of {key: 'foo', value: 'component value'}
 })
@@ -218,12 +331,12 @@ Fingerprint2.get(options, function (components) {
 })
 ```
 
-
 ### Excludes
 
 Before exclusion was done by putting an individual excludes like `excludeTouchSupport: true` in the options.
 
 To exclude a component now, put its key inside the excludes object in options
+
 ```
 var options = {excludes: {touchSupport: true}}
 ```
@@ -231,7 +344,6 @@ var options = {excludes: {touchSupport: true}}
 ### Custom Entropy Function
 
 `options.customEntropyFunction` and `customKey` have been replaced with a extension friendly, stable alternative. The new contract allows for async sources as well. See below for component definition. `options.extraComponents` should contain an array with custom components.
-
 
 ```
 var options = {
@@ -272,9 +384,11 @@ audioTimeout is an option, default 1000ms
 ### Component
 
 A components is an object with at least key and getData keys, example:
+
 ```
 {key: 'userAgent', getData: UserAgent, pauseBefore: false}
 ```
+
 getData value is the components function.
 
 ### Component function
@@ -298,31 +412,30 @@ Unit tests are in `specs/specs.js`
 
 To run the tests in the browser, launch `spec_runner.html`
 
-
 ## Other
 
 ### Future development
 
 Many more fingerprinting sources will be implemented, such as (in no particular order)
 
-* Multi-monitor detection,
-* Internal HashTable implementation detection
-* WebRTC fingerprinting
-* Math constants
-* Accessibility fingerprinting
-* Camera information
-* DRM support
-* Accelerometer support
-* Virtual keyboards
-* List of supported gestures (for touch-enabled devices)
-* Pixel density
-* Video and audio codecs availability
+- Multi-monitor detection,
+- Internal HashTable implementation detection
+- WebRTC fingerprinting
+- Math constants
+- Accessibility fingerprinting
+- Camera information
+- DRM support
+- Accelerometer support
+- Virtual keyboards
+- List of supported gestures (for touch-enabled devices)
+- Pixel density
+- Video and audio codecs availability
 
 ### To recompile the `FontList.swf` file:
 
-* Download [Adobe Flex SDK](http://www.adobe.com/devnet/flex/flex-sdk-download.html)
-* Unzip it, add the `bin/` directory to your `$PATH`  (mxmlc binary should be in path)
-* Run `make`
+- Download [Adobe Flex SDK](http://www.adobe.com/devnet/flex/flex-sdk-download.html)
+- Unzip it, add the `bin/` directory to your `$PATH` (mxmlc binary should be in path)
+- Run `make`
 
 ### Talk about the library (in Russian) on FrontEnd Conf 2015
 
