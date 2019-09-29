@@ -284,6 +284,16 @@ The constants are not configurable. To use the constants in your custom componen
 import { NOT_AVAILABLE, ERROR, EXCLUDED } from 'fingerprint2'
 ```
 
+### `x64hash128`
+
+`Fingerprint2.x64hash128` is not exposed anymore. Import the function as
+
+```js
+import { x64hash128 } from 'fingerprint2'
+```
+
+Or if you prefer, you can use a different hash function.
+
 ### Backwards compatibility mode
 
 The backwards compatibility mode function (`Fingerprint2.getV18`). If you wish to keep using [the exact implementation](https://github.com/Valve/fingerprintjs2/blob/bf7039da92655f981b2b958bb51a031e15601dbe/fingerprint2.js#L1378-L1420), you can copy it to your codebase.
