@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/Valve/fingerprintjs2",
   "main": "src/index.js",
-  "browser": "dist/fingerprint2.umd.js",
+  "browser": "dist/fingerprint2.min.js",
   "files": [
     "dist",
     "flash"
