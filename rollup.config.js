@@ -9,7 +9,7 @@ import config from './package.json'
 
 const licenseContents = fs.readFileSync(
   path.resolve(__dirname, 'license.txt'),
-  { encoding: 'utf-8' },
+  { encoding: 'utf-8' }
 )
 
 module.exports = [
@@ -19,7 +19,7 @@ module.exports = [
       file: config.browser,
       format: 'umd',
       name: 'Fingerprint2',
-      banner: licenseContents.replace('${YEAR}', new Date().getFullYear()),
+      banner: licenseContents.replace('{YEAR}', new Date().getFullYear())
     },
     plugins: [
       commonjs(),
@@ -31,9 +31,9 @@ module.exports = [
           comments: (_, comment) => {
             // Do not remove the license comments.
             return /Fingerprintjs2|Licensed under/.test(comment.value)
-          },
-        },
-      }),
-    ],
-  },
+          }
+        }
+      })
+    ]
+  }
 ]
