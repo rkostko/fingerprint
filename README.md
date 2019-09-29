@@ -1,3 +1,9 @@
+## About this fork
+
+The goal of this fork is to create a modular build of `Fingerprint2`. The benefit is easier reuse and composition. With tree-shaking, you can also expect smaller build output because it's easier to detect unused code.
+
+---
+
 <p align="center">
   <a href="https://fingerprintjs.com">
     <img  src="https://fingerprintjs.com/img/logo-raster.png" alt="FPJS logo">
