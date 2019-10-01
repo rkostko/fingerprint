@@ -294,7 +294,7 @@ Or if you prefer, you can use a different hash function.
 
 ### Backwards compatibility mode
 
-The backwards compatibility mode function (`Fingerprint2.getV18`). If you wish to keep using [the exact implementation](https://github.com/Valve/fingerprintjs2/blob/bf7039da92655f981b2b958bb51a031e15601dbe/fingerprint2.js#L1378-L1420), you can copy it to your codebase.
+The backwards compatibility mode function (`Fingerprint2.getV18`) was removed. If you wish to keep using [the exact implementation](https://github.com/Valve/fingerprintjs2/blob/bf7039da92655f981b2b958bb51a031e15601dbe/fingerprint2.js#L1378-L1420), you can copy it to your codebase.
 
 ### `getPromise`
 
