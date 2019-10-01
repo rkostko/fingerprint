@@ -123,5 +123,9 @@ function getData (done, options) {
 
 export default {
   key: 'plugins',
-  getData
+  getData,
+  defaultOptions: {
+    sortPluginsFor: [/palemoon/i],
+    excludeIE: false
+  }
 }

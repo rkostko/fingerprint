@@ -26,25 +26,9 @@ export const VERSION = '3.0.0'
 
 var defaultOptions = {
   preprocessor: null,
-  audio: {
-    timeout: 1000,
-    // On iOS 11, audio context can only be used in response to user interaction.
-    // We require users to explicitly enable audio fingerprinting on iOS 11.
-    // See https://stackoverflow.com/questions/46363048/onaudioprocess-not-called-on-ios11#46534088
-    excludeIOS11: true
-  },
-  fonts: {
-    swfContainerId: 'fingerprintjs2',
-    swfPath: 'flash/compiled/FontList.swf',
-    userDefinedFonts: []
-  },
   screen: {
     // To ensure consistent fingerprints when users rotate their mobile devices
     detectScreenOrientation: true
-  },
-  plugins: {
-    sortPluginsFor: [/palemoon/i],
-    excludeIE: false
   }
 }
 
@@ -75,7 +59,11 @@ export default function Fingerprint2 (options, callback) {
       callback(keys.data)
       return
     }
-    var component = options.components[i]
+    const component = options.components[i]
+    options[component.key] = extendSoft(
+      options[component.key] || {},
+      component.defaultOptions
+    )
 
     if (!alreadyWaited && component.pauseBefore) {
       i -= 1

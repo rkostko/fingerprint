@@ -169,11 +169,11 @@ Fingerprint2(
 )
 ```
 
-### `fonts.swfContainerId`
+### `fontsFlash.swfContainerId`
 
 Specifies the dom element ID to be used for swf embedding (flash fonts)
 
-### `fonts.swfPath`
+### `fontsFlash.swfPath`
 
 Specifies the path to the FontList.swf (flash fonts)
 

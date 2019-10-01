@@ -8,7 +8,7 @@ const hasMinFlashInstalled = () => {
 
 const addFlashDivNode = (options) => {
   var node = document.createElement('div')
-  node.setAttribute('id', options.fonts.swfContainerId)
+  node.setAttribute('id', options.fontsFlash.swfContainerId)
   document.body.appendChild(node)
 }
 
@@ -17,12 +17,12 @@ const loadSwfAndDetectFonts = (done, options) => {
   window[hiddenCallback] = (fonts) => {
     done(fonts)
   }
-  var id = options.fonts.swfContainerId
+  var id = options.fontsFlash.swfContainerId
   addFlashDivNode()
   var flashvars = { onReady: hiddenCallback }
   var flashparams = { allowScriptAccess: 'always', menu: 'false' }
   window.swfobject.embedSWF(
-    options.fonts.swfPath,
+    options.fontsFlash.swfPath,
     id,
     '1',
     '1',
@@ -43,8 +43,8 @@ function getData (done, options) {
   if (!hasMinFlashInstalled()) {
     return done('flash not installed')
   }
-  if (!options.fonts.swfPath) {
-    return done('missing options.fonts.swfPath')
+  if (!options.fontsFlash.swfPath) {
+    return done('missing options.fontsFlash.swfPath')
   }
   loadSwfAndDetectFonts(function (fonts) {
     done(fonts)
@@ -54,5 +54,9 @@ function getData (done, options) {
 export default {
   key: 'fontsFlash',
   getData,
-  pauseBefore: true
+  pauseBefore: true,
+  defaultOptions: {
+    swfContainerId: 'fingerprintjs2',
+    swfPath: 'flash/compiled/FontList.swf'
+  }
 }
