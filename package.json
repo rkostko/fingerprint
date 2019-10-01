@@ -55,7 +55,8 @@
     "test": "karma start --single-run --browsers ChromeHeadless tests/karma.conf.js",
     "test:debug": "karma start --single-run=false --browsers Chrome tests/karma.conf.js",
     "gulp": "gulp",
-    "lint": "standard --fix"
+    "lint": "standard --fix",
+    "prepublishOnly": "yarn build"
   },
   "standard": {
     "ignore": [
