@@ -41,14 +41,13 @@ export default function Fingerprint2 (options, callback) {
   }
   extendSoft(options, defaultOptions)
 
-  var keys = {
-    data: [],
-    addPreprocessedComponent: function (key, value) {
-      if (typeof options.preprocessor === 'function') {
-        value = options.preprocessor(key, value)
-      }
-      keys.data.push({ key: key, value: value })
+  const data = []
+
+  const addPreprocessedComponent = (key, value) => {
+    if (typeof options.preprocessor === 'function') {
+      value = options.preprocessor(key, value)
     }
+    data.push({ key, value })
   }
 
   var i = -1
@@ -56,7 +55,7 @@ export default function Fingerprint2 (options, callback) {
     i += 1
     if (i >= options.components.length) {
       // on finish
-      callback(keys.data)
+      callback(data)
       return
     }
     const component = options.components[i]
@@ -75,12 +74,12 @@ export default function Fingerprint2 (options, callback) {
 
     try {
       component.getData(function (value) {
-        keys.addPreprocessedComponent(component.key, value)
+        addPreprocessedComponent(component.key, value)
         chainComponents(false)
       }, options)
     } catch (error) {
       // main body error
-      keys.addPreprocessedComponent(component.key, String(error))
+      addPreprocessedComponent(component.key, String(error))
       chainComponents(false)
     }
   }
