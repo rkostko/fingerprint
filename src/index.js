@@ -36,8 +36,7 @@ var defaultOptions = {
   fonts: {
     swfContainerId: 'fingerprintjs2',
     swfPath: 'flash/compiled/FontList.swf',
-    userDefinedFonts: [],
-    extendedJsFonts: false
+    userDefinedFonts: []
   },
   screen: {
     // To ensure consistent fingerprints when users rotate their mobile devices
