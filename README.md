@@ -296,6 +296,16 @@ Or if you prefer, you can use a different hash function.
 
 The backwards compatibility mode function (`Fingerprint2.getV18`). If you wish to keep using [the exact implementation](https://github.com/Valve/fingerprintjs2/blob/bf7039da92655f981b2b958bb51a031e15601dbe/fingerprint2.js#L1378-L1420), you can copy it to your codebase.
 
+### `getPromise`
+
+The `Fingerprint2.getPromise` was removed. To support it in all browsers, we would have to provide a polyfill. The function was a simple wrapper around `new Promise`, and you can replicate it with this code:
+
+```js
+const fingerprintPromise = new Promise((resolve) => {
+  Fingerprint2(options, resolve)
+})
+```
+
 ## Upgrade guide from 1.8.2 to 2.0.0
 
 ### Backwards compatibility mode
