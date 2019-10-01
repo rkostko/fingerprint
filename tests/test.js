@@ -683,4 +683,18 @@ describe('Fingerprint2', () => {
       })
     })
   })
+
+  describe('#x64hash128', () => {
+    it('generates a hash from returned component values', (done) => {
+      window.requestIdleCallback(() => {
+        Fingerprint2.get((components) => {
+          var values = components.map((component) => component.value)
+          var murmur = Fingerprint2.x64hash128(values.join(''), 31)
+          expect(murmur).toMatch(/[0-9a-f]{32}/i)
+
+          done()
+        })
+      })
+    })
+  })
 })
