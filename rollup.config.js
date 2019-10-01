@@ -4,6 +4,7 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import { uglify } from 'rollup-plugin-uglify'
+import replace from 'rollup-plugin-replace'
 
 import config from './package.json'
 
@@ -12,7 +13,12 @@ const licenseContents = fs.readFileSync(
   { encoding: 'utf-8' }
 )
 
-const commonPlugins = [babel()]
+const commonPlugins = [
+  replace({
+    NPM_VERSION: JSON.stringify(config.version)
+  }),
+  babel()
+]
 
 module.exports = [
   {

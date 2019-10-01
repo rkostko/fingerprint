@@ -22,7 +22,8 @@ export * from './components/index'
 export { default as x64hash128 } from './x64hash128'
 export { extendedFontsList } from './components/fonts'
 
-export const VERSION = '3.0.0'
+/* global NPM_VERSION */
+export const VERSION = NPM_VERSION
 
 var defaultOptions = {
   preprocessor: null,
